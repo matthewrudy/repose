@@ -18,8 +18,6 @@ require 'repose'
 
 include GLI
 
-Repose::VERSION
-
 program_desc 'Describe your application here'
 
 version Repose::VERSION
