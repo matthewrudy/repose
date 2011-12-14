@@ -7,8 +7,8 @@ class ReposeTest < ActiveSupport::TestCase
   test "define" do
     definition = Repose.define do
       directory "Rails" do
-        repo "core", :git => "https://github.com/rails/rails.git"
-        repo "my-fork", :git => "git@github.com:me/rails.git"
+        git "core", :url=> "https://github.com/rails/rails.git"
+        git "my-fork", :url => "git@github.com:me/rails.git"
       end
     end
 
@@ -28,9 +28,9 @@ class ReposeTest < ActiveSupport::TestCase
     definition = Repose.define do
       directory "Outer" do
         directory "Inner" do
-          repo "InnerProject", :git => "git@example.com:inner.git"
+          git "InnerProject", :url => "git@example.com:inner.git"
         end
-        repo "OuterProject", :git => "git@example.com:outer.git"
+        git "OuterProject", :url => "git@example.com:outer.git"
       end
     end
 
@@ -42,13 +42,19 @@ class ReposeTest < ActiveSupport::TestCase
     assert_equal 1, outer_dir.directories.length
 
     assert_equal 1, outer_dir.repos.length
-    assert_equal "OuterProject", outer_dir.repos.first.name
+    outer_repo = outer_dir.repos.first
+
+    assert_equal "OuterProject", outer_repo.name
+    assert_equal "git@example.com:outer.git", outer_repo.url
 
     inner_dir = outer_dir.directories.first
     assert_equal "Inner", inner_dir.path
 
     assert_equal 1, inner_dir.repos.length
-    assert_equal "InnerProject", inner_dir.repos.first.name
+    inner_repo = inner_dir.repos.first
+
+    assert_equal "InnerProject", inner_repo.name
+    assert_equal "git@example.com:inner.git", inner_repo.url
   end
 
 end

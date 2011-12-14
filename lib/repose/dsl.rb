@@ -11,8 +11,8 @@ module Repose
       private # DSL methods should be private
 
       # directory "Rails" do
-      #  repo "core", :git => "https://github.com/rails/rails.git"
-      #  repo "my-fork", :git => "git@github.com:me/rails.git"
+      #  git "core", :url => "https://github.com/rails/rails.git"
+      #  git "my-fork", :git => "git@github.com:me/rails.git"
       # end
       def directory(path, &block)
         @directories << Directory.new(path, &block)
@@ -33,8 +33,13 @@ module Repose
 
       private # DSL methods should be private
 
-      def repo(name, options)
-        @repos << Repository.new(name, options)
+      # the git repository type
+      def git(name, options)
+        add_repository(GitRepository, name, options)
+      end
+
+      def add_repository(klass, name, options)
+        @repos << klass.new(name, options)
       end
 
     end
@@ -46,6 +51,14 @@ module Repose
       end
       attr_reader :name
 
+      def url
+        @options[:url]
+      end
+
     end
+
+    class GitRepository < Repository
+    end
+
   end
 end
