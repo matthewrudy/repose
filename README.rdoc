@@ -1,0 +1,13 @@
+= repose
+
+Repose is here to make it easier to organise your project directories.
+
+== Reposefile
+
+    directory "Rails" do
+      repo "core", :git => "https://github.com/rails/rails.git"
+      repo "my-fork", :git => "git@github.com:me/rails.git"
+    end
+
+:include:repose.rdoc
+
