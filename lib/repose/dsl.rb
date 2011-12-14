@@ -23,6 +23,14 @@ module Repose
       def full_path
         "."
       end
+
+      def install(base_path)
+        #noop
+      end
+
+      def update(base_path)
+        #noop
+      end
     end
 
     class Directory < Node
@@ -39,10 +47,32 @@ module Repose
         parent && parent.full_path
       end
 
-      def full_path
-        File.join([parent_path, path].compact)
+      def full_path(base_path=nil)
+        File.join([base_path, parent_path, path].compact)
       end
 
+      def install(base_path)
+        create!(base_path)
+      end
+
+      def update(base_path)
+        create!(base_path)
+      end
+
+      protected
+
+      def create!(base_path)
+        expanded_path = full_path(base_path)
+        if File.exist?(expanded_path)
+          if File.directory?(expanded_path)
+            # all is good
+          else
+            raise "#{expanded_path} already exists, but is not a directory"
+          end
+        else
+          File.mkdir_p(expanded_path)
+        end
+      end
 
       private # DSL methods should be private
 
@@ -72,13 +102,21 @@ module Repose
         @options[:directory]
       end
 
-      def full_path
-        File.join(directory.full_path, name)
+      def full_path(base_path=nil)
+        File.join(directory.full_path(base_path), name)
       end
 
     end
 
     class GitRepository < Repository
+
+      def install(base_path)
+        `git clone #{url} #{full_path}`
+      end
+
+      def update(base_path)
+        `cd #{full_path(base_path)} && git pull origin`
+      end
     end
 
   end
