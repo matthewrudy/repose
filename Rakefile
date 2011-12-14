@@ -33,7 +33,7 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options      = %w(--main README.rdoc)
 
   # Add any extra files to include in the gem
-  s.files             = %w(Gemfile Rakefile README.rdoc repose.rdoc) + Dir.glob("{bin,test,lib}/**/*")
+  s.files             = %w(Gemfile Rakefile README.rdoc) + Dir.glob("{bin,test,lib}/**/*")
   s.executables       = FileList["bin/**"].map { |f| File.basename(f) }
   s.require_paths     = ["lib"]
 

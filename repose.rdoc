@@ -1,5 +1,0 @@
-= repose
-
-Generate this with
-    repose rdoc
-After you have described your command line interface

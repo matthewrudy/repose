@@ -2,12 +2,47 @@
 
 Repose is here to make it easier to organise your project directories.
 
+structure and share your ~/Projects folder
+
 == Reposefile
 
-    directory "Rails" do
-      git "core",    :url => "https://github.com/rails/rails.git"
-      git "my-fork", :url => "git@github.com:me/rails.git"
+    # 37Signals and Google are my clients
+
+    directory "Clients" do
+      directory "37Signals" do
+        git "BaseCamp", :url => "git@37signals.com:basecamp.git"
+        git "Campfire", :url => "git@37signals.com:campfire.git"
+      end
+  
+      directory "Google" do
+        git "SearchEngine", :url => "git@google.com:core.git"
+      end
+    end
+  
+    # I do Open Source in various languages
+    
+    directory "OpenSource" do
+      directory "Node" do
+        git "Core", :url => "https://github.com/joyent/node.git"
+        git "Socket.io", :url => "https://github.com/LearnBoost/socket.io.git"
+      end
+      
+      directory "Ruby" do
+        git "Rails", :url => "https://github.com/rails/rails.git"
+      end
+      
     end
 
-:include:repose.rdoc
+== Commands
 
+Create a new Reposefile
+
+    repose init
+
+Install all directories and repositories
+
+    repose install
+    
+Update all your repositories (ie. git pull)
+
+    repose update

@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = "MatthewRudyJacobs@gmail.com"
   s.executables = ["repose"]
   s.extra_rdoc_files = ["README.rdoc"]
-  s.files = ["Gemfile", "Rakefile", "README.rdoc", "repose.rdoc", "bin/repose", "test/repose_test.rb", "test/test_helper.rb", "lib/repose", "lib/repose/definition.rb", "lib/repose/dsl.rb", "lib/repose/generator", "lib/repose/generator/Reposefile", "lib/repose/generator.rb", "lib/repose/version.rb", "lib/repose.rb"]
+  s.files = ["Gemfile", "Rakefile", "README.rdoc", "repose.rdoc", "bin/repose", "test/repose_test.rb", "test/test_helper.rb", "lib/repose/definition.rb", "lib/repose/dsl.rb", "lib/repose/generator/Reposefile", "lib/repose/generator.rb", "lib/repose/version.rb", "lib/repose.rb"]
   s.homepage = "https://github.com/matthewrudy/repose"
   s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
