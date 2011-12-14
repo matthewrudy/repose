@@ -5,15 +5,16 @@ require 'repose'
 class ReposeTest < ActiveSupport::TestCase
 
   test "define" do
-    base = Repose.define do
+    definition = Repose.define do
       directory "Rails" do
         repo "core", :git => "https://github.com/rails/rails.git"
         repo "my-fork", :git => "git@github.com:me/rails.git"
       end
     end
 
-    assert_equal 1, base.directories.length
-    rails_dir = base.directories.first
+    dsl = definition.dsl
+    assert_equal 1, dsl.directories.length
+    rails_dir = dsl.directories.first
 
     assert_equal "Rails", rails_dir.path
     assert_equal 2, rails_dir.repos.length
@@ -24,7 +25,7 @@ class ReposeTest < ActiveSupport::TestCase
   end
 
   test "define - nested directories" do
-    base = Repose.define do
+    definition = Repose.define do
       directory "Outer" do
         directory "Inner" do
           repo "InnerProject", :git => "git@example.com:inner.git"
@@ -33,8 +34,9 @@ class ReposeTest < ActiveSupport::TestCase
       end
     end
 
-    assert_equal 1, base.directories.length
-    outer_dir = base.directories.first
+    dsl = definition.dsl
+    assert_equal 1, dsl.directories.length
+    outer_dir = dsl.directories.first
 
     assert_equal "Outer", outer_dir.path
     assert_equal 1, outer_dir.directories.length
