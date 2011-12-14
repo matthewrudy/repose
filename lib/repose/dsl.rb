@@ -8,6 +8,8 @@ module Repose
       end
       attr_reader :directories
 
+      private # DSL methods should be private
+
       # directory "Rails" do
       #  repo "core", :git => "https://github.com/rails/rails.git"
       #  repo "my-fork", :git => "git@github.com:me/rails.git"
@@ -28,6 +30,8 @@ module Repose
         super()
       end
       attr_reader :path, :repos
+
+      private # DSL methods should be private
 
       def repo(name, options)
         @repos << Repository.new(name, options)
