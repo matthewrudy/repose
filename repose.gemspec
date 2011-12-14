@@ -2,15 +2,15 @@
 
 Gem::Specification.new do |s|
   s.name = "repose"
-  s.version = "0.0.1"
+  s.version = "0.0.1.alpha1"
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matthew Rudy Jacobs"]
   s.date = "2011-12-14"
   s.email = "MatthewRudyJacobs@gmail.com"
   s.executables = ["repose"]
   s.extra_rdoc_files = ["README.rdoc"]
-  s.files = ["Gemfile", "Rakefile", "README.rdoc", "repose.rdoc", "bin/repose", "test/repose_test.rb", "test/test_helper.rb", "lib/repose", "lib/repose/definition.rb", "lib/repose/dsl.rb", "lib/repose/version.rb", "lib/repose.rb"]
+  s.files = ["Gemfile", "Rakefile", "README.rdoc", "repose.rdoc", "bin/repose", "test/repose_test.rb", "test/test_helper.rb", "lib/repose/definition.rb", "lib/repose/dsl.rb", "lib/repose/generator/Reposefile", "lib/repose/generator.rb", "lib/repose/version.rb", "lib/repose.rb"]
   s.homepage = "https://github.com/matthewrudy/repose"
   s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
