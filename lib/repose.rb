@@ -1,17 +1,16 @@
 module Repose
 
-  class Base
+  def self.define(&block)
+    BaseNode.new(&block)
+  end
 
-    def initialize
+  class Node
+
+    def initialize(&block)
       @directories = []
+      instance_eval(&block)
     end
     attr_reader :directories
-
-    def self.define(&block)
-      self.new().tap do |base|
-        base.instance_eval(&block)
-      end
-    end
 
     # directory "Rails" do
     #  repo "core", :git => "https://github.com/rails/rails.git"
@@ -20,16 +19,17 @@ module Repose
     def directory(path, &block)
       @directories << Directory.new(path, &block)
     end
-
   end
 
-  class Directory
+  class BaseNode < Node
+  end
+
+  class Directory < Node
 
     def initialize(path, &block)
       @path = path
       @repos = []
-
-      instance_eval(&block)
+      super()
     end
     attr_reader :path, :repos
 
