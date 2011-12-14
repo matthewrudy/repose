@@ -9,15 +9,15 @@ Rake::RDocTask.new do |rd|
   rd.title = 'Your application title'
 end
 
-spec = eval(File.read('repose.gemspec'))
-
-Rake::GemPackageTask.new(spec) do |pkg|
-end
+# spec = eval(File.read('repose.gemspec'))
+# 
+# Rake::GemPackageTask.new(spec) do |pkg|
+# end
 
 require 'rake/testtask'
 Rake::TestTask.new do |t|
   t.libs << "test"
-  t.test_files = FileList['test/tc_*.rb']
+  t.test_files = FileList['test/*_test.rb']
 end
 
 task :default => :test

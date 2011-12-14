@@ -1,5 +1,6 @@
 # Ensure we require the local version and not one we might have installed already
-require File.join([File.dirname(__FILE__),'lib','repose_version.rb'])
+require File.join([File.dirname(__FILE__),'lib','repose', 'version.rb'])
+
 spec = Gem::Specification.new do |s| 
   s.name = 'repose'
   s.version = Repose::VERSION
