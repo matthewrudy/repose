@@ -27,8 +27,9 @@ class ReposeTest < ActiveSupport::TestCase
     base = Repose.define do
       directory "Outer" do
         directory "Inner" do
-          repo "project", :git => "git@example.com:repo.git"
+          repo "InnerProject", :git => "git@example.com:inner.git"
         end
+        repo "OuterProject", :git => "git@example.com:outer.git"
       end
     end
 
@@ -38,12 +39,14 @@ class ReposeTest < ActiveSupport::TestCase
     assert_equal "Outer", outer_dir.path
     assert_equal 1, outer_dir.directories.length
 
+    assert_equal 1, outer_dir.repos.length
+    assert_equal "OuterProject", outer_dir.repos.first.name
+
     inner_dir = outer_dir.directories.first
     assert_equal "Inner", inner_dir.path
 
     assert_equal 1, inner_dir.repos.length
-    project_repo = inner_dir.repos.first
-    assert_equal "project", project_repo.name
+    assert_equal "InnerProject", inner_dir.repos.first.name
   end
 
 end
