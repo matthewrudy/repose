@@ -1,0 +1,26 @@
+# Reposefile
+# ==========
+# structure and share your ~/Projects folder
+#
+# define your structure
+# then run
+#
+#  repose install
+#
+#  directory "Clients" do
+#    directory "37Signals" do
+#      git "BaseCamp", :url => "git@37signals.com:basecamp.git"
+#      git "Campfire", :url => "git@37signals.com:campfire.git"
+#    end
+#
+#    directory "Google" do
+#      git "SearchEngine", :url => "git@google.com:core.git"
+#    end
+#  end
+#
+#  directory "OpenSource" do
+#    directory "Ruby" do
+#      git "Rails", :url => "https://github.com/rails/rails.git"
+#    end
+#  end
+#

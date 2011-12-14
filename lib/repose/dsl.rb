@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Repose
   module DSL
     class Node
@@ -7,6 +9,14 @@ module Repose
         instance_eval(&block)
       end
       attr_reader :directories
+
+      # go through each directory yield it, then recurse
+      def each_node(&block)
+        directories.each do |d|
+          block.call(d)
+          d.each_node(&block)
+        end
+      end
 
       private # DSL methods should be private
 
@@ -59,18 +69,27 @@ module Repose
         create!(base_path)
       end
 
+      def each_node(&block)
+        super(&block)
+        repos.each do |r|
+          block.call(r)
+        end
+      end
+
       protected
 
       def create!(base_path)
         expanded_path = full_path(base_path)
         if File.exist?(expanded_path)
           if File.directory?(expanded_path)
+            puts "path exists: #{expanded_path}" if Repose.verbose
             # all is good
           else
             raise "#{expanded_path} already exists, but is not a directory"
           end
         else
-          File.mkdir_p(expanded_path)
+          FileUtils.mkdir_p(expanded_path)
+          puts "path created: #{expanded_path}" if Repose.verbose
         end
       end
 
@@ -111,7 +130,9 @@ module Repose
     class GitRepository < Repository
 
       def install(base_path)
-        `git clone #{url} #{full_path}`
+        clone_command = "git clone #{url} #{full_path(base_path)}"
+        puts clone_command if Repose.verbose
+        system(clone_command)
       end
 
       def update(base_path)
