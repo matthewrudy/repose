@@ -57,4 +57,30 @@ class ReposeTest < ActiveSupport::TestCase
     assert_equal "git@example.com:inner.git", inner_repo.url
   end
 
+  test "full path" do
+    definition = Repose.define do
+      directory "Outer" do
+        directory "Inner" do
+          git "InnerProject", :url => "git@example.com:inner.git"
+        end
+        git "OuterProject", :url => "git@example.com:outer.git"
+      end
+    end
+
+    dsl = definition.dsl
+    assert_equal ".", dsl.full_path
+
+    outer = dsl.directories.first
+    assert_equal "./Outer", outer.full_path
+
+    outer_repo = outer.repos.first
+    assert_equal "./Outer/OuterProject", outer_repo.full_path
+
+    inner = outer.directories.first
+    assert_equal "./Outer/Inner", inner.full_path
+
+    inner_repo = inner.repos.first
+    assert_equal "./Outer/Inner/InnerProject", inner_repo.full_path
+  end
+
 end

@@ -15,21 +15,34 @@ module Repose
       #  git "my-fork", :git => "git@github.com:me/rails.git"
       # end
       def directory(path, &block)
-        @directories << Directory.new(path, &block)
+        @directories << Directory.new(path, self, &block)
       end
     end
 
     class BaseNode < Node
+      def full_path
+        "."
+      end
     end
 
     class Directory < Node
 
-      def initialize(path, &block)
+      def initialize(path, parent=nil, &block)
         @path = path
+        @parent = parent
         @repos = []
         super()
       end
-      attr_reader :path, :repos
+      attr_reader :path, :parent, :repos
+
+      def parent_path
+        parent && parent.full_path
+      end
+
+      def full_path
+        File.join([parent_path, path].compact)
+      end
+
 
       private # DSL methods should be private
 
@@ -39,7 +52,7 @@ module Repose
       end
 
       def add_repository(klass, name, options)
-        @repos << klass.new(name, options)
+        @repos << klass.new(name, options.merge(:directory => self))
       end
 
     end
@@ -53,6 +66,14 @@ module Repose
 
       def url
         @options[:url]
+      end
+
+      def directory
+        @options[:directory]
+      end
+
+      def full_path
+        File.join(directory.full_path, name)
       end
 
     end
